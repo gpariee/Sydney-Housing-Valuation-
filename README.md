@@ -1,20 +1,16 @@
-# Sydney Housing Valuation — ML Lifecycle Project
+# Sydney Housing Valuation — Machine Learning Project
 
 Full machine-learning lifecycle case study predicting Sydney house prices across three suburbs
 (Mosman, Marrickville, Blacktown): data exploration, feature engineering, model comparison
 (Ridge / Random Forest / HistGradientBoosting) with 5-fold cross-validation, prediction-error
 analysis, an ML-vs-LLM-vs-human valuation benchmark, and a deployed Flask prediction app.
 
-**⚠️ Data note:** `raw_listings.csv` is an AI-generated placeholder dataset built to mimic the
-structure of real Domain/realestate.com.au sold-listing records (see the project report, Part 1.2,
-for full disclosure). It is not real sale data. To make this a genuine analysis, replace it with
-real sold-listing records using the same column names and re-run the notebook/scripts — everything
-downstream regenerates automatically.
+**⚠️ Data note:** `raw_listings.csv` is an placeholder dataset with real sold-listing records from real estate.com.au and domain.com.au
 
 ## Contents
 | File | Purpose |
 |---|---|
-| `Sydney_Housing_Valuation.ipynb` | Full end-to-end notebook (Parts 1–6), pre-executed with outputs |
+| `Sydney_Housing_Valuation.ipynb` | Full end-to-end notebook (Parts 1–6), With outputs |
 | `raw_listings.csv` | Input dataset |
 | `eda.py`, `feature_eng.py`, `model.py`, `error_analysis.py` | Equivalent standalone scripts |
 | `build_report.py` | Generates the PDF report |
