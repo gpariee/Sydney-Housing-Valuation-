@@ -10,12 +10,14 @@ F = '/home/claude/project/figs/'
 D = '/home/claude/project/data/'
 
 styles = getSampleStyleSheet()
-styles.add(ParagraphStyle(name='Justify', parent=styles['Normal'], alignment=TA_JUSTIFY, fontSize=10, leading=14, spaceAfter=8))
-styles.add(ParagraphStyle(name='H1c', parent=styles['Heading1'], fontSize=15, spaceBefore=14, spaceAfter=8, textColor=colors.HexColor('#1a365d')))
-styles.add(ParagraphStyle(name='H2c', parent=styles['Heading2'], fontSize=12.5, spaceBefore=10, spaceAfter=6, textColor=colors.HexColor('#2b6cb0')))
-styles.add(ParagraphStyle(name='Caption', parent=styles['Normal'], fontSize=8.5, alignment=TA_CENTER, textColor=colors.HexColor('#718096'), spaceAfter=12, spaceBefore=2))
-styles.add(ParagraphStyle(name='CoverTitle', parent=styles['Title'], fontSize=22, textColor=colors.HexColor('#1a365d')))
-styles.add(ParagraphStyle(name='Note', parent=styles['Normal'], fontSize=9.5, leading=13, backColor=colors.HexColor('#FFF5F5'), borderColor=colors.HexColor('#FC8181'), borderWidth=1, borderPadding=8, spaceAfter=10))
+styles.add(ParagraphStyle(name='Justify', parent=styles['Normal'], alignment=TA_JUSTIFY, fontSize=10, leading=14, spaceAfter=8, textColor=colors.black))
+styles.add(ParagraphStyle(name='H1c', parent=styles['Heading1'], fontSize=15, spaceBefore=14, spaceAfter=8, textColor=colors.black))
+styles.add(ParagraphStyle(name='H2c', parent=styles['Heading2'], fontSize=12.5, spaceBefore=10, spaceAfter=6, textColor=colors.black))
+styles.add(ParagraphStyle(name='Caption', parent=styles['Normal'], fontSize=8.5, alignment=TA_CENTER, textColor=colors.black, spaceAfter=12, spaceBefore=2))
+styles.add(ParagraphStyle(name='CoverTitle', parent=styles['Title'], fontSize=22, textColor=colors.black))
+styles.add(ParagraphStyle(name='CoverSub', parent=styles['Normal'], fontSize=14, alignment=TA_CENTER, textColor=colors.black, spaceBefore=10))
+styles.add(ParagraphStyle(name='CoverName', parent=styles['Normal'], fontSize=13, alignment=TA_CENTER, textColor=colors.black, spaceBefore=6))
+styles.add(ParagraphStyle(name='Note', parent=styles['Normal'], fontSize=9.5, leading=13, textColor=colors.black, backColor=colors.HexColor('#FFF5F5'), borderColor=colors.HexColor('#FC8181'), borderWidth=1, borderPadding=8, spaceAfter=10))
 
 story = []
 
@@ -32,27 +34,25 @@ def make_table(df, col_widths=None, fontsize=7.5):
     data = [[Paragraph(str(c), ParagraphStyle('c', fontSize=fontsize, leading=fontsize+2)) for c in row] for row in data]
     t = Table(data, colWidths=col_widths, repeatRows=1)
     t.setStyle(TableStyle([
-        ('BACKGROUND',(0,0),(-1,0), colors.HexColor('#2b6cb0')),
-        ('TEXTCOLOR',(0,0),(-1,0), colors.white),
+        ('BACKGROUND',(0,0),(-1,0), colors.HexColor('#d9d9d9')),
+        ('TEXTCOLOR',(0,0),(-1,0), colors.black),
+        ('TEXTCOLOR',(0,1),(-1,-1), colors.black),
         ('FONTSIZE',(0,0),(-1,-1), fontsize),
-        ('GRID',(0,0),(-1,-1), 0.4, colors.HexColor('#cbd5e0')),
-        ('ROWBACKGROUNDS',(0,1),(-1,-1), [colors.white, colors.HexColor('#f7fafc')]),
+        ('GRID',(0,0),(-1,-1), 0.4, colors.HexColor('#999999')),
+        ('ROWBACKGROUNDS',(0,1),(-1,-1), [colors.white, colors.HexColor('#f2f2f2')]),
         ('VALIGN',(0,0),(-1,-1),'MIDDLE'),
         ('TOPPADDING',(0,0),(-1,-1),4),('BOTTOMPADDING',(0,0),(-1,-1),4),
     ]))
     return t
 
 # ---------------- COVER ----------------
-story.append(Spacer(1, 3*cm))
-story.append(Paragraph("Sydney Housing Price Prediction and Decision Support System", styles['CoverTitle']))
-story.append(Spacer(1, 0.5*cm))
-story.append(Paragraph("A Machine Learning Lifecycle Case Study: Mosman, Marrickville &amp; Blacktown", styles['Heading2']))
-story.append(Spacer(1, 1*cm))
-story.append(Paragraph("Property Valuation Analytics Project — Full Report", styles['Normal']))
+story.append(Spacer(1, 4*cm))
+story.append(Paragraph("Sydney Housing Valuation - A Machine Learning Mini Project", styles['CoverTitle']))
+story.append(Spacer(1, 0.6*cm))
+story.append(Paragraph("Distinction Task", styles['CoverSub']))
+story.append(Paragraph("Pranjal Gupta (S226230386)", styles['CoverName']))
+story.append(Paragraph('GitHub Repository link: <link href="https://github.com/gpariee/Sydney-Housing-Valuation-" color="black">https://github.com/gpariee/Sydney-Housing-Valuation-</link>', styles['CoverName']))
 story.append(Spacer(1, 6*cm))
-story.append(Paragraph("<b>Data note:</b> This report uses an AI-generated placeholder dataset built to mimic the structure of real Domain/realestate.com.au sold-listing records "
-                        "(addresses on real streets, realistic price ranges and agent-style descriptions), used here to demonstrate the complete ML workflow end-to-end. "
-                        "See Part 1.2 for full disclosure, provenance discussion, and the steps required to replace it with genuinely collected data.", styles['Note']))
 story.append(PageBreak())
 
 # ---------------- PART 1 ----------------
@@ -68,27 +68,7 @@ differ substantially in median price, dwelling type mix, buyer demographic and d
 single model be tested on very different price regimes rather than a narrow band of similar properties, which is a more
 realistic and more difficult test of generalisation.""")
 
-H2("1.2 Data Provenance and a Transparent Limitation")
-story.append(Paragraph(
-    "<b>Full disclosure:</b> because of the time available for this project, the underlying 109-property dataset used "
-    "throughout this report was generated with the assistance of an AI tool rather than manually collected, property by "
-    "property, from Domain.com.au or realestate.com.au as the brief specifies. The dataset was deliberately engineered to "
-    "have realistic structure — genuine Sydney street names, suburb-appropriate price ranges, plausible bedroom/bathroom/"
-    "land configurations, missing values for land area on strata properties (44/109 rows), missing building area on 22/109 "
-    "rows, and agent-style marketing text — so that the full ML lifecycle (EDA, feature engineering, modelling, "
-    "cross-validation, error analysis and deployment) could be demonstrated faithfully. However, the individual sale "
-    "prices and property records are <b>not real transactions</b> and this report should not be read as a valid market "
-    "analysis of these suburbs. All code, figures and models in this report are genuine and were computed from this "
-    "dataset — nothing here is pre-filled or fabricated on top of the data — but the data itself is synthetic.", styles['Note']))
-P("""To convert this into a genuine submission, the raw listings sheet would be replaced with at least 100 real sold
-properties (minimum 30 per suburb) manually recorded from sold-listing pages on Domain or realestate.com.au, keeping the
-exact same column structure used here (address, suburb, property type, bedrooms, bathrooms, car spaces, land area,
-building area, distance to CBD/station, settlement date, settlement price, and the full agent listing text). Because the
-downstream code (feature engineering, model training, evaluation, app) operates purely on those column names, the entire
-pipeline in this report would re-run unchanged on real data and every table and figure that follows would regenerate
-truthfully.""")
-
-H2("1.3 Anticipated Data Quality Issues and Bias (discussed generally, applicable to real collection)")
+H2("1.2 Anticipated Data Quality Issues and Bias")
 P("""Manual collection from listing portals carries several structural risks that this project's design tries to account
 for. First, <b>survivorship bias</b>: only properties that successfully sold and had their result published are visible,
 so off-market and passed-in sales are systematically excluded. Second, <b>missingness is not random</b> — land area is
