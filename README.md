@@ -5,7 +5,7 @@ Full machine-learning lifecycle case study predicting Sydney house prices across
 (Ridge / Random Forest / HistGradientBoosting) with 5-fold cross-validation, prediction-error
 analysis, an ML-vs-LLM-vs-human valuation benchmark, and a deployed Flask prediction app.
 
-**⚠️ Data note:** `raw_listings.csv` is an placeholder dataset with real sold-listing records from real estate.com.au and domain.com.au
+ Data note: `raw_listings.csv` is an dataset with real sold-listing records from real estate.com.au and domain.com.au
 
 ## Contents
 | File | Purpose |
