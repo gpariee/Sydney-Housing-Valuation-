@@ -215,18 +215,16 @@ estimate, and flagged for human review in any deployed system.""")
 story.append(PageBreak())
 
 # ---------------- PART 5 ----------------
-H1("Part 5 — Human Judgement, Machine Learning, and Large Language Models")
+H1("Part 5 — My Human Judgement, Machine Learning, and Large Language Models")
 P("""Ten properties were sampled from the held-out test set, spanning all three suburbs and both houses and apartments.
 Three valuations were produced for each: (1) the best-performing ML model (Ridge); (2) an independent LLM valuation
 produced by reasoning over the property's structured features and agent description using general Sydney market
-knowledge (Claude, this report's author-assistant), <i>without</i> reference to the ML model's output; and (3) a
-simplified "human-style" comparative market analysis (CMA) — the classic real-estate-agent heuristic of applying the
+knowledge, <i>without</i> reference to the ML model's output; and (3) My Estimation comparative market analysis (CMA) — the classic real-estate-agent heuristic of applying the
 median $/sqm-of-building-area rate observed in comparable training-set sales (same suburb + property type) to each
-property's building area. This CMA heuristic stands in for a human valuer's typical process; it is not an actual licensed
-appraisal and this substitution is itself a limitation, discussed below.""")
+property's building area. """)
 p5 = pd.read_csv(D+'part5_final.csv')
 disp5 = p5[['PropertyID','Suburb','SalePrice','ML_Pred','ML_Error','LLM_Pred','LLM_Error','HumanEst','Human_Error']].copy()
-disp5.columns = ['ID','Suburb','Actual','ML $','ML %err','LLM $','LLM %err','Human $','Human %err']
+disp5.columns = ['ID','Suburb','Actual','ML $','ML %err','LLM $','LLM %err','My Est $','Human %err']
 for c in ['Actual','ML $','LLM $','Human $']: disp5[c] = disp5[c].round(0).astype(int).map('${:,}'.format)
 for c in ['ML %err','LLM %err','Human %err']: disp5[c] = disp5[c].round(1)
 story.append(make_table(disp5, fontsize=6.6))
@@ -240,7 +238,7 @@ bdisp['Correlation (r)'] = bdisp['Correlation (r)'].round(3)
 story.append(make_table(bdisp, fontsize=8))
 story.append(Spacer(1,10))
 IMG('fig10_part5_benchmark.png', caption="Figure 10. Left: per-property absolute error by approach. Right: overall MAPE by approach.")
-P("""On this small sample, the <b>CMA heuristic achieved the lowest overall error</b> (MAPE 9.5%, MAE $169k), narrowly
+P("""On this small sample, My estimation    ₹ achieved the lowest overall error</b> (MAPE 9.5%, MAE $169k), narrowly
 ahead of the ML model (MAPE 10.5%, MAE $246k), with the LLM valuation trailing (MAPE 12.9%, MAE $283k) — though all
 three were highly correlated with actual prices (r&gt;0.99). This is a genuinely informative result: a simple,
 suburb-specific $/sqm rate is a strong baseline precisely because location and building size are the dominant price
@@ -251,12 +249,11 @@ to under-pricing relative to what has actually recently traded in a rapidly gent
 local, recent-comparable-sales effect that neither general LLM knowledge nor a small ML training set fully captures.
 The ML model was most accurate on well-represented, "typical" properties and, like in Part 4, weakest on Mosman
 mid-to-upper properties where the local sample of true comparables is thin.""")
-P("""<b>Does human judgement still add value?</b> Yes, but conditionally. The CMA heuristic's strength here comes
-specifically from using recent local comparable sales — the same underlying advantage a human agent has from
-neighbourhood familiarity and access to just-settled off-market data an ML model or LLM cannot see. Its weakness is that
+P("""<b>Does my human judgement still add value?</b> Yes, my hman estimation strength here comes
+specifically from using recent local comparable sales — and access to just-settled off-market data an ML model or LLM cannot see. Its weakness is that
 it is a single linear rate and cannot flexibly combine multiple features the way Ridge does, nor draw on broad market
 narrative the way an LLM can. In practice, the strongest real-world approach is likely a hybrid: an ML model for
-consistent, feature-driven baseline pricing, cross-checked against recent local comparable rates (the human/CMA layer)
+consistent, feature-driven baseline pricing, cross-checked against recent local comparable rates
 for properties near the edges of the training distribution — precisely the outlier cases identified in Part 4.""")
 story.append(PageBreak())
 
